@@ -4,7 +4,7 @@ services:
     container_name: go-server
     build:
       context: ./
-      dockerfile: ./DockerfileGoServer
+      dockerfile: ./Dockerfile-GoServer
     image: betchi/go-server
     expose:
       - 50051 # grpc server insecure
@@ -22,19 +22,6 @@ services:
     secrets:
       - localhost.crt
       - localhost.key
-  # go-client:
-  #   container_name: go-client
-  #   build:
-  #     context: ./
-  #     dockerfile: ./DockerfileGoClient
-  #   image: betchi/go-client
-  #   environment:
-  #     - ENDPOINT=localhost:8081
-  #     - CRT_PATH=/run/secrets/localhost.crt
-  #   networks:
-  #     - grpc-web-test
-  #   secrets:
-  #     - localhost.crt
   envoy:
     container_name: envoy
     image: envoyproxy/envoy-alpine-debug:latest
@@ -65,9 +52,6 @@ services:
       - 8083:8083
       - 8084:8084
     volumes:
-      # - ./nginx/grpc-proxy.conf:/etc/nginx/conf.d/grpc-proxy.conf
-      # - ./nginx/grpc-proxy-ssl.conf:/etc/nginx/conf.d/grpc-proxy-ssl.conf
-      # - ./ts-client/dist:/usr/share/nginx/html
       - ./nginx/nginx.conf:/github/grpc-web-base/gConnector_static/conf/nginx.conf
       - ./ts-client/dist:/var/www/html
     links:
