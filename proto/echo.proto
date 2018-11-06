@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 package echo;
-// option go_package = "protoc-gen-go";
 
 message EchoRequest {
   string text = 1;
