@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package echo;
+// option go_package = "protoc-gen-go";
+
+message EchoRequest {
+  string text = 1;
+}
+
+message EchoResponse {
+  string text = 1;
+}
+
+service EchoService {
+  rpc Echo(EchoRequest) returns (EchoResponse);
+}

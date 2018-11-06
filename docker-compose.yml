@@ -1,0 +1,117 @@
+version: '3.6'
+services:
+  go-server:
+    container_name: go-server
+    build:
+      context: ./
+      dockerfile: ./DockerfileGoServer
+    image: betchi/go-server
+    expose:
+      - 50051 # grpc server insecure
+      - 50052 # grpc server with tls
+    ports:
+      - 50051:50051
+      - 50052:50052
+    environment:
+      - PORT=:50051
+      - PORT_TLS=:50052
+      - CRT_PATH=/run/secrets/localhost.crt
+      - KEY_PATH=/run/secrets/localhost.key
+    networks:
+      - grpc-web-test
+    secrets:
+      - localhost.crt
+      - localhost.key
+  # go-client:
+  #   container_name: go-client
+  #   build:
+  #     context: ./
+  #     dockerfile: ./DockerfileGoClient
+  #   image: betchi/go-client
+  #   environment:
+  #     - ENDPOINT=localhost:8081
+  #     - CRT_PATH=/run/secrets/localhost.crt
+  #   networks:
+  #     - grpc-web-test
+  #   secrets:
+  #     - localhost.crt
+  envoy:
+    container_name: envoy
+    image: envoyproxy/envoy-alpine-debug:latest
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+    expose:
+      - 8080 # proxy
+      - 9901 # admin ui
+    ports:
+      - 8080:8080
+      - 9901:9901
+    links:
+      - go-server
+    networks:
+      - grpc-web-test
+  nginx-grpc-web:
+    container_name: nginx
+    # image: nginx:1.15.5
+    image: grpcweb/nginx
+    expose:
+      - 8081 # http
+      - 8082 # grpc proxy for http
+      - 8083 # ssl http2
+      - 8084 # grpc proxy for ssl http2
+    ports:
+      - 8081:8081
+      - 8082:8082
+      - 8083:8083
+      - 8084:8084
+    volumes:
+      # - ./nginx/grpc-proxy.conf:/etc/nginx/conf.d/grpc-proxy.conf
+      # - ./nginx/grpc-proxy-ssl.conf:/etc/nginx/conf.d/grpc-proxy-ssl.conf
+      # - ./ts-client/dist:/usr/share/nginx/html
+      - ./nginx/nginx.conf:/github/grpc-web-base/gConnector_static/conf/nginx.conf
+      - ./ts-client/dist:/var/www/html
+    links:
+      - go-server
+    networks:
+      - grpc-web-test
+    secrets:
+      - localhost.crt
+      - localhost.key
+  kong:
+    container_name: kong
+    image: kong:0.14.1
+    environment:
+      - KONG_DATABASE=cassandra
+      - KONG_CASSANDRA_CONTACT_POINTS=kong-database
+      - KONG_DB_UPDATE_PROPAGATION=1
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_PROXY_LISTEN=0.0.0.0:8000, 0.0.0.0:8443 ssl http2
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl http2
+      - KONG_SSL_CERT=/run/secrets/localhost.crt
+      - KONG_SSL_CERT_KEY=/run/secrets/localhost.key
+    expose:
+      - 8000 # proxy
+      - 8001 # admin proxy
+      - 8443 # proxy ssl http2
+      - 8444 # admin ssl http2
+    ports:
+      - 8000:8000
+      - 8443:8443
+      - 8001:8001
+      - 8444:8444
+    networks:
+      - grpc-web-test
+    secrets:
+      - localhost.crt
+      - localhost.key
+networks:
+  grpc-web-test:
+    external: true
+secrets:
+  localhost.crt:
+    file: ./tls/localhost.crt
+  localhost.key:
+    file: ./tls/localhost.key

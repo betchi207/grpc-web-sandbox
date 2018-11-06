@@ -1,0 +1,23 @@
+FROM golang:1.11.1-alpine3.7 AS build
+
+RUN apk --no-cache --update upgrade && apk add git
+
+COPY ./ /go/src/github.com/betchi/grpc-web-test
+WORKDIR /go/src/github.com/betchi/grpc-web-test/go-server
+RUN go get github.com/golang/protobuf/proto
+RUN go get google.golang.org/grpc
+RUN go build -o go-server
+
+FROM alpine:3.7
+
+RUN apk --no-cache --update upgrade \
+  && apk add --update --no-cache tzdata ca-certificates \
+  && update-ca-certificates --fresh
+
+RUN mkdir -p /app
+COPY --from=build /go/src/github.com/betchi/grpc-web-test/go-server/go-server /app/go-server
+
+STOPSIGNAL SIGTERM
+
+EXPOSE 50051
+ENTRYPOINT ["/app/go-server"]

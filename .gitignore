@@ -1,0 +1,5 @@
+ts-client/.cache/
+*node_modules/
+kong-database/commitlog/*
+kong-database/hints/*
+kong-database/saved_caches/*
