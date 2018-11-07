@@ -1,10 +1,3 @@
 ts-client/.cache/
 *node_modules/
-kong-database/data/system/*
-kong-database/data/system_auth/*
-kong-database/data/system_distributed/*
-kong-database/data/system_scheme/*
-kong-database/data/system_traces/*
-kong-database/commitlog/*
-kong-database/hints/*
-kong-database/saved_caches/*
+kong-database
