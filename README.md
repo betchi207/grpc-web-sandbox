@@ -9,11 +9,9 @@ This project is a project to check gRPC Web on localhost
 ```
 git clone https://github.com/grpc/grpc-web.git
 cd grpc-web
-docker-compose up nginx
+docker-compose build nginx
 ```
 It takes a long time to build. Please wait for a while.
-
-When nginx starts up, please terminate once with <kbd>Ctrl</kbd> <kbd>D</kbd>
 
 ### 2. Run cassandra for kong on docker
 
