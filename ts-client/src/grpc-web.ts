@@ -9,8 +9,8 @@ const run = (endpoint: string, id: string) => {
   const req = new EchoRequest();
   req.setText('grpc-web mode=grpcweb')
 
-  const blockchainService = new EchoServiceClient(endpoint, {}, {});
-  blockchainService.echo(
+  const client = new EchoServiceClient(endpoint, {}, {});
+  client.echo(
     req,
     {},
     (err: grpcWeb.Error, res: EchoResponse) => {
