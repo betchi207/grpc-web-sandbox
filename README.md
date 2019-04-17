@@ -9,7 +9,9 @@ This project is a project to check gRPC Web on localhost
 ```
 git clone https://github.com/grpc/grpc-web.git
 cd grpc-web
-docker-compose build nginx
+git checkout -b 1.0.4 refs/tags/1.0.4
+docker-compose -f advanced.yml build prereqs
+docker-compose -f advanced.yml build nginx
 ```
 It takes a long time to build. Please wait for a while.
 
