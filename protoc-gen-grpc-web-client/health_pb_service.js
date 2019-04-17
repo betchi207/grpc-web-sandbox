@@ -1,36 +1,36 @@
-// package: echo
-// file: echo.proto
+// package: grpc.health.v1
+// file: health.proto
 
-var echo_pb = require("./echo_pb");
+var health_pb = require("./health_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
-var EchoService = (function () {
-  function EchoService() {}
-  EchoService.serviceName = "echo.EchoService";
-  return EchoService;
+var Health = (function () {
+  function Health() {}
+  Health.serviceName = "grpc.health.v1.Health";
+  return Health;
 }());
 
-EchoService.Echo = {
-  methodName: "Echo",
-  service: EchoService,
+Health.Check = {
+  methodName: "Check",
+  service: Health,
   requestStream: false,
   responseStream: false,
-  requestType: echo_pb.EchoRequest,
-  responseType: echo_pb.EchoResponse
+  requestType: health_pb.HealthCheckRequest,
+  responseType: health_pb.HealthCheckResponse
 };
 
-exports.EchoService = EchoService;
+exports.Health = Health;
 
-function EchoServiceClient(serviceHost, options) {
+function HealthClient(serviceHost, options) {
   this.serviceHost = serviceHost;
   this.options = options || {};
 }
 
-EchoServiceClient.prototype.echo = function echo(requestMessage, metadata, callback) {
+HealthClient.prototype.check = function check(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1];
   }
-  var client = grpc.unary(EchoService.Echo, {
+  var client = grpc.unary(Health.Check, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
@@ -57,5 +57,5 @@ EchoServiceClient.prototype.echo = function echo(requestMessage, metadata, callb
   };
 };
 
-exports.EchoServiceClient = EchoServiceClient;
+exports.HealthClient = HealthClient;
 

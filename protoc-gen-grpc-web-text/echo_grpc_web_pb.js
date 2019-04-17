@@ -78,7 +78,7 @@ proto.echo.EchoServicePromiseClient =
  *   !proto.echo.EchoRequest,
  *   !proto.echo.EchoResponse>}
  */
-const methodInfo_Echo = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_EchoService_Echo = new grpc.web.AbstractClientBase.MethodInfo(
   proto.echo.EchoResponse,
   /** @param {!proto.echo.EchoRequest} request */
   function(request) {
@@ -104,7 +104,7 @@ proto.echo.EchoServiceClient.prototype.echo =
       '/echo.EchoService/Echo',
       request,
       metadata,
-      methodInfo_Echo,
+      methodInfo_EchoService_Echo,
       callback);
 };
 

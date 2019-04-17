@@ -13,14 +13,25 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 
-	pb "github.com/betchi/grpc-web-test/protoc-gen-go"
+	echoPb "github.com/betchi/grpc-web-test/protoc-gen-go/echo"
+	healthPb "github.com/betchi/grpc-web-test/protoc-gen-go/health"
 )
 
 type echoServer struct{}
 
-func (s *echoServer) Echo(ctx context.Context, msg *pb.EchoRequest) (*pb.EchoResponse, error) {
-	return &pb.EchoResponse{
+func (s *echoServer) Echo(ctx context.Context, msg *echoPb.EchoRequest) (*echoPb.EchoResponse, error) {
+	log.Println("Echo")
+	return &echoPb.EchoResponse{
 		Text: fmt.Sprintf("Hello from %s", msg.Text),
+	}, nil
+}
+
+type healthServer struct{}
+
+func (s *healthServer) Check(ctx context.Context, in *healthPb.HealthCheckRequest) (*healthPb.HealthCheckResponse, error) {
+	log.Println("Health")
+	return &healthPb.HealthCheckResponse{
+		Status: healthPb.HealthCheckResponse_SERVING,
 	}, nil
 }
 
@@ -40,7 +51,8 @@ func main() {
 		srvTLS := grpc.NewServer(tlsOpt)
 		defer srvTLS.Stop()
 
-		pb.RegisterEchoServiceServer(srvTLS, &echoServer{})
+		healthPb.RegisterHealthServer(srvTLS, &healthServer{})
+		echoPb.RegisterEchoServiceServer(srvTLS, &echoServer{})
 		reflection.Register(srvTLS)
 		log.Printf("listening to server at port %v (with tls)\n", portTLS)
 		log.Fatal(srvTLS.Serve(lisTLS))
@@ -55,7 +67,8 @@ func main() {
 	srv := grpc.NewServer()
 	defer srv.Stop()
 
-	pb.RegisterEchoServiceServer(srv, &echoServer{})
+	healthPb.RegisterHealthServer(srv, &healthServer{})
+	echoPb.RegisterEchoServiceServer(srv, &echoServer{})
 	reflection.Register(srv)
 	log.Printf("listening to server at port %v (insecure)\n", port)
 	log.Fatal(srv.Serve(lis))

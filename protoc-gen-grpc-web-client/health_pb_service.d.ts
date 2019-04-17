@@ -1,21 +1,21 @@
-// package: echo
-// file: echo.proto
+// package: grpc.health.v1
+// file: health.proto
 
-import * as echo_pb from "./echo_pb";
+import * as health_pb from "./health_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type EchoServiceEcho = {
+type HealthCheck = {
   readonly methodName: string;
-  readonly service: typeof EchoService;
+  readonly service: typeof Health;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof echo_pb.EchoRequest;
-  readonly responseType: typeof echo_pb.EchoResponse;
+  readonly requestType: typeof health_pb.HealthCheckRequest;
+  readonly responseType: typeof health_pb.HealthCheckResponse;
 };
 
-export class EchoService {
+export class Health {
   static readonly serviceName: string;
-  static readonly Echo: EchoServiceEcho;
+  static readonly Check: HealthCheck;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -46,18 +46,18 @@ interface BidirectionalStream<ReqT, ResT> {
   on(type: 'status', handler: (status: Status) => void): BidirectionalStream<ReqT, ResT>;
 }
 
-export class EchoServiceClient {
+export class HealthClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  echo(
-    requestMessage: echo_pb.EchoRequest,
+  check(
+    requestMessage: health_pb.HealthCheckRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.EchoResponse|null) => void
+    callback: (error: ServiceError|null, responseMessage: health_pb.HealthCheckResponse|null) => void
   ): UnaryResponse;
-  echo(
-    requestMessage: echo_pb.EchoRequest,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.EchoResponse|null) => void
+  check(
+    requestMessage: health_pb.HealthCheckRequest,
+    callback: (error: ServiceError|null, responseMessage: health_pb.HealthCheckResponse|null) => void
   ): UnaryResponse;
 }
 

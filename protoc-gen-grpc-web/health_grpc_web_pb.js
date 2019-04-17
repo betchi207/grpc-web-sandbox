@@ -1,5 +1,5 @@
 /**
- * @fileoverview gRPC-Web generated client stub for echo
+ * @fileoverview gRPC-Web generated client stub for grpc.health.v1
  * @enhanceable
  * @public
  */
@@ -12,7 +12,9 @@ const grpc = {};
 grpc.web = require('grpc-web');
 
 const proto = {};
-proto.echo = require('./echo_pb.js');
+proto.grpc = {};
+proto.grpc.health = {};
+proto.grpc.health.v1 = require('./health_pb.js');
 
 /**
  * @param {string} hostname
@@ -22,7 +24,7 @@ proto.echo = require('./echo_pb.js');
  * @struct
  * @final
  */
-proto.echo.EchoServiceClient =
+proto.grpc.health.v1.HealthClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options['format'] = 'binary';
@@ -58,15 +60,15 @@ proto.echo.EchoServiceClient =
  * @struct
  * @final
  */
-proto.echo.EchoServicePromiseClient =
+proto.grpc.health.v1.HealthPromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options['format'] = 'binary';
 
   /**
-   * @private @const {!proto.echo.EchoServiceClient} The delegate callback based client
+   * @private @const {!proto.grpc.health.v1.HealthClient} The delegate callback based client
    */
-  this.delegateClient_ = new proto.echo.EchoServiceClient(
+  this.delegateClient_ = new proto.grpc.health.v1.HealthClient(
       hostname, credentials, options);
 
 };
@@ -75,52 +77,52 @@ proto.echo.EchoServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.echo.EchoRequest,
- *   !proto.echo.EchoResponse>}
+ *   !proto.grpc.health.v1.HealthCheckRequest,
+ *   !proto.grpc.health.v1.HealthCheckResponse>}
  */
-const methodInfo_EchoService_Echo = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.echo.EchoResponse,
-  /** @param {!proto.echo.EchoRequest} request */
+const methodInfo_Health_Check = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.grpc.health.v1.HealthCheckResponse,
+  /** @param {!proto.grpc.health.v1.HealthCheckRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.echo.EchoResponse.deserializeBinary
+  proto.grpc.health.v1.HealthCheckResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.echo.EchoRequest} request The
+ * @param {!proto.grpc.health.v1.HealthCheckRequest} request The
  *     request proto
  * @param {!Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.echo.EchoResponse)}
+ * @param {function(?grpc.web.Error, ?proto.grpc.health.v1.HealthCheckResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.echo.EchoResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.grpc.health.v1.HealthCheckResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.echo.EchoServiceClient.prototype.echo =
+proto.grpc.health.v1.HealthClient.prototype.check =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/echo.EchoService/Echo',
+      '/grpc.health.v1.Health/Check',
       request,
       metadata,
-      methodInfo_EchoService_Echo,
+      methodInfo_Health_Check,
       callback);
 };
 
 
 /**
- * @param {!proto.echo.EchoRequest} request The
+ * @param {!proto.grpc.health.v1.HealthCheckRequest} request The
  *     request proto
  * @param {!Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.echo.EchoResponse>}
+ * @return {!Promise<!proto.grpc.health.v1.HealthCheckResponse>}
  *     The XHR Node Readable Stream
  */
-proto.echo.EchoServicePromiseClient.prototype.echo =
+proto.grpc.health.v1.HealthPromiseClient.prototype.check =
     function(request, metadata) {
   return new Promise((resolve, reject) => {
-    this.delegateClient_.echo(
+    this.delegateClient_.check(
       request, metadata, (error, response) => {
         error ? reject(error) : resolve(response);
       });
@@ -128,5 +130,5 @@ proto.echo.EchoServicePromiseClient.prototype.echo =
 };
 
 
-module.exports = proto.echo;
+module.exports = proto.grpc.health.v1;
 

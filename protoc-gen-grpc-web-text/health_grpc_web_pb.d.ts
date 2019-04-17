@@ -1,31 +1,31 @@
 import * as grpcWeb from 'grpc-web';
 import {
-  EchoRequest,
-  EchoResponse} from './echo_pb';
+  HealthCheckRequest,
+  HealthCheckResponse} from './health_pb';
 
-export class EchoServiceClient {
+export class HealthClient {
   constructor (hostname: string,
                credentials: null | { [index: string]: string; },
                options: null | { [index: string]: string; });
 
-  echo(
-    request: EchoRequest,
+  check(
+    request: HealthCheckRequest,
     metadata: grpcWeb.Metadata,
     callback: (err: grpcWeb.Error,
-               response: EchoResponse) => void
-  ): grpcWeb.ClientReadableStream<EchoResponse>;
+               response: HealthCheckResponse) => void
+  ): grpcWeb.ClientReadableStream<HealthCheckResponse>;
 
 }
 
-export class EchoServicePromiseClient {
+export class HealthPromiseClient {
   constructor (hostname: string,
                credentials: null | { [index: string]: string; },
                options: null | { [index: string]: string; });
 
-  echo(
-    request: EchoRequest,
+  check(
+    request: HealthCheckRequest,
     metadata: grpcWeb.Metadata
-  ): Promise<EchoResponse>;
+  ): Promise<HealthCheckResponse>;
 
 }
 
