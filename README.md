@@ -55,37 +55,25 @@ You should also check the network panel of the browser's developer tool.
 
 ![Alt text](img/network-panel.png "Title")
 
-## How to customize Protocol Buffers (on Mac)
+## How to customize Protocol Buffers
 
 ### 1. Edit proto file
 
 Edit `./proto/echo.proto`
 
-### 2. Install compiler
+### 2. Build compiler (build docker image)
 
 ```
-# protocol buffers compiler
-brew install protobuf
-
-# compiler for golang
-go get -u github.com/golang/protobuf/protoc-gen-go
-
-# compiler for gRPC Web
-git clone git@github.com:grpc/grpc-web.git
-cd grpc-web
-sudo make install-plugin
-
-# compiler for Typescript
-npm install -g ts-protoc-gen
+make build-protobuf-builder
 ```
 
-### 3. Compile proto file
+### 3. Compile proto file (use docker image)
 
 ```
-./genproto.sh
+make build-protobuf
 ```
 
-### 4. Edit grpc server program
+### 4. Edit grpc server program (use docker image)
 
 Edit `go-server/main.go`
 
