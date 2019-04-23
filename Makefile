@@ -25,6 +25,7 @@ build-protobuf:
 .PHONY: bundle
 bundle:
 	cd ts-client; \
+	rm -rf dist/*; \
 	parcel build index.html
 
 .PHONY: clean
