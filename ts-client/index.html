@@ -22,8 +22,21 @@
       font-size: 2rem !important;
       text-transform: none !important;
     }
+    .uk-section-default {
+      margin-bottom: 60px;
+    }
     .protocol-container {
       min-width: 760px;
+    }
+    .endpoint-container {
+      min-width: 760px;
+      margin-bottom: 60px;
+    }
+    .uk-subnav>*>:first-child {
+      text-transform: none !important;
+    }
+    #set-external-endpoint {
+      color: white;
     }
   </style>
 </head>
@@ -42,6 +55,15 @@
             </select>
           </div>
         </li>
+      </ul>
+    </div>
+
+    <div class="uk-background-muted endpoint-container uk-padding">
+      <p>If you want to make a request to an external endpoint, manually enter the endpoint and click the SET button</p>
+      <p>It is assumed that <a href="https://github.com/grpc/grpc/blob/master/doc/health-checking.md" target="_blank">GRPC Health Checking Protocol</a> is implemented</p>
+      <ul class="uk-subnav" uk-margin>
+        <li><input id="external-endpoint" class="uk-input" type="text" size="60" placeholder="https://example.com/your-grpc-web-endpoint"></li>
+        <li><button id="set-external-endpoint" class="uk-button uk-button-primary" type="button">SET</button></li>
       </ul>
     </div>
 
@@ -110,6 +132,18 @@
               <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
               <td><img src="./img/golang.png" width="50" uk-img /></td>
               <td class="run"><button class="uk-button uk-button-primary" type="button" data-url-https="https://localhost:8443/nginx" data-url="http://localhost:8000/nginx">RUN</button></td>
+              <td class="result"></td>
+            </tr>
+            <tr>
+              <td class="case-no"></td>
+              <td><img src="./img/js.png" width="50" /><br><span class="uk-text-small uk-text-bold">grpc-web<br>mode=grpcweb</span></td>
+              <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+              <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+              <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+              <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+              <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+              <td><span>your external endpoint</span></td>
+              <td class="run"><button class="uk-button uk-button-primary run-external-endpoint" type="button" data-url-https="" data-url="" disabled>RUN</button></td>
               <td class="result"></td>
             </tr>
           </tbody>
@@ -184,6 +218,18 @@
               <td class="run"><button class="uk-button uk-button-primary" type="button" data-url-https="https://localhost:8443/nginx" data-url="http://localhost:8000/nginx">RUN</button></td>
               <td class="result"></td>
             </tr>
+            <tr>
+                <td class="case-no"></td>
+                <td><img src="./img/js.png" width="50" /><br><span class="uk-text-small uk-text-bold">grpc-web<br>mode=grpcweb</span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span>your external endpoint</span></td>
+                <td class="run"><button class="uk-button uk-button-primary run-external-endpoint" type="button" data-url-https="" data-url="" disabled>RUN</button></td>
+                <td class="result"></td>
+              </tr>
           </tbody>
         </table>
       </div>
@@ -256,13 +302,24 @@
               <td class="run"><button class="uk-button uk-button-primary" type="button" data-url-https="https://localhost:8443/nginx" data-url="http://localhost:8000/nginx">RUN</button></td>
               <td class="result"></td>
             </tr>
+            <tr>
+                <td class="case-no"></td>
+                <td><img src="./img/js.png" width="50" /><br><span class="uk-text-small uk-text-bold">grpc-web<br>mode=grpcweb</span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span class="uk-margin-small-right" uk-icon="arrow-right"></span></td>
+                <td><span>your external endpoint</span></td>
+                <td class="run"><button class="uk-button uk-button-primary run-external-endpoint" type="button" data-url-https="" data-url="" disabled>RUN</button></td>
+                <td class="result"></td>
+              </tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <!-- grpc-web client -->
-    <script src="./src/httpButton.ts"></script>
-    <script src="./src/protoSelect.ts"></script>
+    <script src="./src/init.ts"></script>
 </body>
 </html>

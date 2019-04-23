@@ -1,6 +1,6 @@
 import { scheme } from './common';
 
-const initHttpButton = () => {
+export const initHttpButton = () => {
     const http11 = document.getElementById('http11');
     const http2 = document.getElementById('http2');
 
@@ -26,4 +26,3 @@ const initHttpButton = () => {
         http2.parentElement.setAttribute('href', '#');
     }
 }
-initHttpButton();
