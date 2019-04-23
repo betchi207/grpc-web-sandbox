@@ -22,15 +22,26 @@
       font-size: 2rem !important;
       text-transform: none !important;
     }
+    .protocol-container {
+      min-width: 760px;
+    }
   </style>
 </head>
 <body>
   <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-    <div class="uk-flex uk-flex-wrap-middle">
+    <div class="uk-flex uk-flex-wrap-middle protocol-container">
       <ul class="uk-subnav" uk-margin>
         <li class="title-li"><h1>gRPC Web check on </h1></li>
         <li><a href="http://localhost:8081"><button id="http11" class="uk-button uk-button-secondary" uk-tooltip="Check on http/1.1">http/1.1</button></a></li>
         <li><a href="https://localhost:8083"><button id="http2" class="uk-button uk-button-default" uk-tooltip="Check on http/2">http/2</button></a></li>
+        <li>
+          <div class="uk-form-controls" uk-tooltip="Select target proto">
+            <select class="uk-select" id="form-stacked-select">
+              <option>Health</option>
+              <option>Echo</option>
+            </select>
+          </div>
+        </li>
       </ul>
     </div>
 
@@ -252,8 +263,6 @@
 
     <!-- grpc-web client -->
     <script src="./src/httpButton.ts"></script>
-    <script src="./src/grpc-web.ts"></script>
-    <script src="./src/grpc-web-text.ts"></script>
-    <script src="./src/grpc-web-client.ts"></script>
+    <script src="./src/protoSelect.ts"></script>
 </body>
 </html>
