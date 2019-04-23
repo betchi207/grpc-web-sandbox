@@ -37,4 +37,5 @@ clean:
 	rm -rf protoc-gen-grpc-web-text/*.ts;
 	rm -rf protoc-gen-grpc-web-client/*.js;
 	rm -rf protoc-gen-grpc-web-client/*.ts;
-	git checkout protoc-gen-go protoc-gen-grpc-web protoc-gen-grpc-web-text protoc-gen-grpc-web-client;
+	rm -rf ts-client/dist/*;
+	git checkout protoc-gen-go protoc-gen-grpc-web protoc-gen-grpc-web-text protoc-gen-grpc-web-client ts-client/dist;
