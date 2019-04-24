@@ -63,7 +63,7 @@
       <p>It is assumed that <a href="https://github.com/grpc/grpc/blob/master/doc/health-checking.md" target="_blank">GRPC Health Checking Protocol</a> is implemented</p>
       <ul class="uk-subnav" uk-margin>
         <li><input id="external-endpoint" class="uk-input" type="text" size="60" placeholder="https://example.com/your-grpc-web-endpoint"></li>
-        <li><button id="set-external-endpoint" class="uk-button uk-button-primary" type="button">SET</button></li>
+        <li><button id="set-external-endpoint" class="uk-button uk-button-primary" type="button" onclick="UIkit.notification({message: 'Setting complete!', pos: 'top-right', status: 'primary'})">SET</button></li>
       </ul>
     </div>
 
